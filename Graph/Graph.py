@@ -31,20 +31,27 @@ class Graph(object):
 			mq = mqueue.pop()
 			visited.add(mq)
 
+			if mq == dest:
+				return True
+
 			for neigh in self.adj_list[mq]:
 				if neigh not in visited:
 					mqueue.insert(0, neigh)
 
-		return dest in visited
+		return False
 
 	def DFS(self, mitem, visited, dest):
 		visited.add(mitem)
 
+		if mitem == dest:
+			return True
+
 		for neigh in self.adj_list[mitem]:
 			if neigh not in visited:
-				self.DFS(neigh, visited, dest)
+				if self.DFS(neigh, visited, dest):
+					return True
 
-		return visited
+		return False
 
 	def hasPathDFS(self, start_node, dest):		
-		return dest in self.DFS(start_node, set(), dest)
+		return self.DFS(start_node, set(), dest)
