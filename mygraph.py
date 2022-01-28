@@ -23,24 +23,21 @@ def measure_time(func, node1, node2):
 
 graph = Graph(directed=True)
 
-nodes = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M']
+nodes = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
 
 for n in nodes:
 	graph.add_node(n)
 
 graph.add_edge("A", "B")
-graph.add_edge("B", "D")
+graph.add_edge("A", "C")
+graph.add_edge("A", "D")
 graph.add_edge("B", "E")
 graph.add_edge("C", "F")
-graph.add_edge("C", "G")
-graph.add_edge("D", "H")
-graph.add_edge("D", "I")
-graph.add_edge("E", "J")
-graph.add_edge("E", "K")
-graph.add_edge("F", "L")
-graph.add_edge("F", "M")
-graph.add_edge("G", "N")
-graph.add_edge("G", "O")
+graph.add_edge("D", "G")
+
+graph.add_edge("B", "H")
+graph.add_edge("C", "I")
+graph.add_edge("D", "J")
 
 #print(graph)
 render_graph(graph)

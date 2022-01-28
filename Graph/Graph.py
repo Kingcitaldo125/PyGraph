@@ -26,10 +26,10 @@ class Graph(object):
 			return False
 
 		mqueue.insert(0, start_node)
+		visited.add(start_node)
 
 		while len(mqueue) > 0:
 			mq = mqueue.pop()
-			visited.add(mq)
 
 			if mq == dest:
 				return True
@@ -37,6 +37,7 @@ class Graph(object):
 			for neigh in self.adj_list[mq]:
 				if neigh not in visited:
 					mqueue.insert(0, neigh)
+					visited.add(neigh)
 
 		return False
 
