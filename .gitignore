@@ -1,4 +1,5 @@
 # Graphviz stuff
+#
 doctest-output/*
 
 # Byte-compiled / optimized / DLL files
