@@ -1,22 +1,36 @@
+from collections import defaultdict
+
 class Graph(object):
 	def __init__(self, directed=False):
-		self.adj_list = {}
+		self.adj_list = defaultdict(set)
 		self.directed = directed
 
 	def __str__(self):
 		return str(self.adj_list)
 
+	def _from_dict(self, ddict):
+		for k,v in ddict.items():
+			for vv in v:
+				self.adj_list[k].add(vv)
+
+	def _from_edgelist(self, edges):
+		for pair in edges:
+			i,j=pair[0],pair[1]
+
+			self.adj_list[i].add(j)
+			self.adj_list[j].add(i)
+
 	def add_node(self, node):
 		if node not in self.adj_list:
-			self.adj_list[node] = []
+			self.adj_list[node]
 		else:
 			print(f"Node '{node}' is already in the adj_list -- returning")
 
 	def add_edge(self, node1, node2):
 		if node1 in self.adj_list and node2 in self.adj_list:
-			self.adj_list[node1].append(node2)
+			self.adj_list[node1].add(node2)
 			if not self.directed:
-				self.adj_list[node2].append(node1)
+				self.adj_list[node2].add(node1)
 
 	def hasPathBFS(self, start_node, dest):
 		visited = set()

@@ -39,8 +39,8 @@ graph.add_edge("B", "H")
 graph.add_edge("C", "I")
 graph.add_edge("D", "J")
 
-#print(graph)
-render_graph(graph)
+print(graph)
+#render_graph(graph)
 
 #print(graph.hasPathBFS("A", "F"))
 #print(graph.hasPathDFS("A", "F"))
