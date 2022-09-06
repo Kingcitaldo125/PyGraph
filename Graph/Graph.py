@@ -41,6 +41,35 @@ class Graph(object):
 
 		return False
 
+	def shortest_path_bfs(self, start_node, end_node):
+		mqueue = []
+		path = []
+		visited = set()
+
+		if start_node not in self.adjList:
+			return
+
+		mqueue.insert(0, [start_node, 0])
+		visited.add(start_node)
+
+		while len(mqueue) > 0:
+			itm = mqueue.pop()
+			i,j = itm[0],itm[1]
+
+			print(f"Visited '{i}' -- {j}")
+			path.append(itm)
+
+			if i == end_node:
+				print(f"Found end node '{end_node}'")
+				return j
+
+			for n in self.adjList[i]:
+				if n not in visited:
+					visited.add(n)
+					mqueue.insert(0, [n,j+1])
+
+		return -1
+
 	def DFS(self, mitem, visited, dest):
 		visited.add(mitem)
 
