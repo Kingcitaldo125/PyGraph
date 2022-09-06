@@ -57,7 +57,6 @@ class Graph(object):
 
 	def shortest_path_bfs(self, start_node, end_node):
 		mqueue = []
-		path = []
 		visited = set()
 
 		if start_node not in self.adjList:
@@ -71,7 +70,6 @@ class Graph(object):
 			i,j = itm[0],itm[1]
 
 			print(f"Visited '{i}' -- {j}")
-			path.append(itm)
 
 			if i == end_node:
 				print(f"Found end node '{end_node}'")
