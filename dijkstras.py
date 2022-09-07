@@ -1,6 +1,7 @@
 from collections import defaultdict
 
 class Node:
+    # dist's default value isn't remotely 'infinity', but works as a basic substitute
     def __init__(self, name, dist = 9999):
         self.name = name
         self.distance = dist
@@ -88,12 +89,19 @@ def update_distance(current_node, neighbor, weight):
         print(f"Updated neighbor '{nname}' distance from '{neigh_dist}' to '{new_dist}'")
 
 def dijkstras(graph, start_node, end_node):
-    mqueue = []
+    mqueue = [] # TBD: Update to use a priority queue/heap
     visited = set([start_node.get_name()])
     path = []
 
     mqueue.insert(0, start_node)
 
+    # Dijkstra's algorithm process:
+    # 1. Set the starting node's distance to '0', and all others to 'infinity'
+    # 2. Update all neighboring nodes' distance values to the sum of the current node's distance + the neighbor's distance
+    #    Only do this if the neighbor's distance is greater than the sum of the current node distance & the neighbor's val
+    # 3. Determine which edge, leading to 1 or more neighbors, had the lowest 'weight'
+    # 4. Visit the neighbor with the lowest edge weight associated with it
+    # 5. Repeat, starting at step 2
     while len(mqueue) > 0:
         itm = mqueue.pop()
         itm_name = itm.get_name()
@@ -105,17 +113,27 @@ def dijkstras(graph, start_node, end_node):
         smallest_weight = 9999
         neighbors = graph.get_neighbors(itm_name)
 
+        # If the current node is our target/end node,
+        # return the path to that target node
         if itm_name == end_node.get_name():
             return path
 
+        # Update the distance of the neighbors:
+        # Take the sum of the edge's weight and the neighbor's distance;
+        # If the sum is less than the neighbor's distance, update the distance
         for neigh, weight in neighbors:
             nname = neigh.get_name()
 
+            # Find the edge leading out of the current node with the smallest weight
+            # Only consider edges that lead to nodes we haven't visited yet
             if nname not in visited:
                 smallest_weight = min(weight, smallest_weight)
 
             update_distance(itm, neigh, weight)
 
+        # For each of the neighbors, determine which neighbor
+        # had the edge with the smallest weight
+        # Visit the neighbor with the lowest edge weight associated with it
         for neigh, weight in neighbors:
             nname = neigh.get_name()
 
