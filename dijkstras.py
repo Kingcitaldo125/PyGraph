@@ -97,7 +97,7 @@ def dijkstras(graph, start_node, end_node):
 
     # Dijkstra's algorithm process:
     # 1. Set the starting node's distance to '0', and all others to 'infinity'
-    # 2. Update all neighboring nodes' distance values to the sum of the current node's distance + the neighbor's distance
+    # 2. Update all neighboring nodes' distance values to the sum of the current node's distance + the weight of the corresponding edge
     #    Only do this if the neighbor's distance is greater than the sum of the current node distance & the neighbor's val
     # 3. Determine which edge, leading to 1 or more neighbors, had the lowest 'weight'
     # 4. Visit the neighbor with the lowest edge weight associated with it
