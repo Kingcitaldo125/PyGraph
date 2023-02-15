@@ -53,7 +53,7 @@ def AStar(start_node: Node, goal_node: Node):
 			return
 
 		print(f'Q node: {q}')
-		closed_set.add(q)
+		closed.add(q)
 
 		# Update the neighbors' heuristic values
 		smallest_neighbor = None
