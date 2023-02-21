@@ -75,7 +75,7 @@ def run_sim(graph, graph_size, print_replacements=False):
 				lvisited = dfs(graph, graph_size, cell, lvisited)
 
 			# For each of the visited nodes, change their value appropriately
-      # (remove islands)
+			# (remove islands)
 			for l in lvisited:
 				if l.value == "#":
 					l.value = "*" if print_replacements else "."
@@ -101,7 +101,7 @@ def main():
 	print_plot(plot)
 	run_sim(graph, graph_size)
 
-  # Print the map after island removal
+	# Print the map after island removal
 	print_plot([[cell.value for cell in row] for row in graph])
 
 if __name__ == "__main__":
