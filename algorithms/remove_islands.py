@@ -26,7 +26,6 @@ def dfs(graph, graph_size, start_node, visited):
 
 	for vnode in visited:
 		if is_edge_node(vnode, graph_size):
-			#print(f'vnode {vnode.x},{vnode.y} is an edge node')
 			return set()
 	return visited
 
