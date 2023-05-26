@@ -14,7 +14,7 @@ def update_distance(current_node_distance, neighbor):
         print(f"Updated neighbor '{nname}' distance from '{neigh_dist}' to '{new_dist}'")
 
 def dijkstras(graph, start_node, end_node):
-    mqueue = [] # TBD: Update to use a priority queue/heap
+    mqueue = []
     visited = set([graph[start_node][0][1]])
     path = []
 
