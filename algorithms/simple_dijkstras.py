@@ -1,86 +1,44 @@
-from collections import defaultdict
+def simple_dijkstras(graph, start_node):
+	mq = []
+	visited = set([])
+	paths = {}
+	route = []
 
-def update_distance(current_node_distance, neighbor):
-    msum = current_node_distance + neighbor[0]
-    neigh_dist = neighbor[2]
+	mq.append((0, start_node))
+	visited.add(start_node)
 
-    if msum < neigh_dist:
-        nname = neighbor[1]
+	while len(mq) > 0:
+		node_id = mq[0][1]
+		node_weight = mq[0][0]
 
-        # Update neighbor distance
-        neighbor[2] = msum
-        new_dist = neighbor[2]
+		mq.pop(0)
 
-        print(f"Updated neighbor '{nname}' distance from '{neigh_dist}' to '{new_dist}'")
+		print(f"Visited '{node_id}'")
 
-def dijkstras(graph, start_node, end_node):
-    mqueue = []
-    visited = set([graph[start_node][0][1]])
-    path = []
+		route.append(node_id)
 
-    mqueue.insert(0, graph[start_node][0])
+		min_neighbor_node = ''
+		min_neighbor_val = 999999
+		for neighbor in graph[node_id][1:]:
+			graph[neighbor[1]][0] = min(graph[neighbor[1]][0], node_weight + neighbor[0])
 
-    # Dijkstra's algorithm process:
-    # 1. Set the starting node's distance to '0', and all others to 'infinity'
-    # 2. Update all neighboring nodes' distance values to the sum of the current node's distance + the weight of the corresponding edge
-    #    Only do this if the neighbor's distance is greater than the sum of the current node distance & the neighbor's val
-    # 3. Determine which edge, leading to 1 or more neighbors, had the lowest 'weight'
-    # 4. Visit the neighbor with the lowest edge weight associated with it
-    # 5. Repeat, starting at step 2
-    while len(mqueue) > 0:
-        itm = mqueue.pop()
-        weight, name, distance = itm[0], itm[1], itm[2]
+			paths[neighbor[1]] = graph[neighbor[1]][0]
 
-        print(f'Visited {name}')
+			if neighbor[1] not in visited and graph[neighbor[1]][0] < min_neighbor_val:
+				min_neighbor_val = graph[neighbor[1]][0]
+				min_neighbor_node = neighbor[1]
 
-        path.append(name)
+			if min_neighbor_node not in visited and min_neighbor_node != '':
+				visited.add(min_neighbor_node)
+				mq.append((min_neighbor_val, min_neighbor_node))
 
-        # If the current node is our target/end node,
-        # return the path to that target node
-        if name == end_node:
-            return path
+	return paths,'->'.join(route)
 
-        smallest_weight = 9999
+graph = {}
 
-        # Update the distance of the neighbors:
-        # Take the sum of the edge's weight and the neighbor's distance;
-        # If the sum is less than the neighbor's distance, update the distance
-        for neighbor in graph[name]:
-            nweight, nname, ndistance = neighbor[0], neighbor[1], neighbor[2]
+graph['A'] = [0, [3, 'B'], [4, 'C']]
+graph['B'] = [999999, [1, 'A'], [1, 'C']]
+graph['C'] = [999999, [4, 'A'], [1, 'B'], [3, 'D']]
+graph['D'] = [999999, [3, 'C']]
 
-            update_distance(distance, neighbor)
-
-            # Find the edge leading out of the current node with the smallest weight
-            # Only consider edges that lead to nodes we haven't visited yet
-            if nname not in visited:
-                smallest_weight = min(nweight, smallest_weight)
-
-        # For each of the neighbors, determine which neighbor
-        # had the edge with the smallest weight
-        # Visit the neighbor with the lowest edge weight associated with it
-        for neighbor in graph[name]:
-            nweight, nname, ndistance = neighbor[0], neighbor[1], neighbor[2]
-
-            if nname not in visited and nweight <= smallest_weight:
-                visited.add(nname)
-                mqueue.insert(0, neighbor)
-
-    return []
-
-mgraph = defaultdict(list)
-
-mgraph['0'].append([-1, 'a', 0])
-
-mgraph['a'].append([3, 'b', 9999])
-mgraph['a'].append([8, 'c', 9999])
-mgraph['b'].append([1, 'd', 9999])
-mgraph['b'].append([2, 'e', 9999])
-mgraph['c'].append([1, 'd', 9999])
-mgraph['c'].append([2, 'f', 9999])
-mgraph['d'].append([1, 'b', 9999])
-mgraph['d'].append([1, 'c', 9999])
-mgraph['d'].append([5, 'f', 9999])
-
-path = dijkstras(mgraph, '0', 'f')
-
-print('path:', path) # a -> b -> d -> c -> f
+print(simple_dijkstras(graph, "A"))
